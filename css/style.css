@@ -1,0 +1,109 @@
+/*
+Included Fonts
+==============
+font-family: 'Roboto', sans-serif;
+font-family: 'Open Sans', sans-serif;
+font-family: 'Amatic SC', cursive;
+font-family: 'Boogaloo', cursive;
+font-family: 'Roboto Mono', monospace;
+font-family: 'Righteous', cursive;
+*/
+
+body{
+	background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Tiling_Dual_Semiregular_V3-6-3-6_Quasiregular_Rhombic.svg/2000px-Tiling_Dual_Semiregular_V3-6-3-6_Quasiregular_Rhombic.svg.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-attachment: fixed;
+	font-family: 'Roboto Mono', monospace;
+}
+
+#calculator {
+	margin-top: 40px;
+	height: 640px;
+  width: 360px;
+  margin-left: auto;
+  margin-right: auto;
+	box-shadow: 5px 7px 20px 5px rgba(0, 0, 0, 0.75);
+}
+
+#display{
+	margin-left: auto;
+	margin-right: auto;
+	width: auto;
+	height: 190px;
+	background-color: #f2f2f2;
+	border: none;
+}
+
+#stage{
+	height: 114px;
+	margin-right: 20px;
+	font-size: 33px;
+}
+
+#answer{
+	height: 76px;
+	margin-right: 20px;
+	font-size: 17px;
+}
+
+button{
+	width: 90px;
+	height: 90px;
+	float: left;
+	background-color: #a6d9d9;
+	border: none;
+	cursor: pointer;
+	transition-duration: 0.35s;
+}
+
+button:hover {
+	background-color: #c9e8e8;
+}
+
+button:active{
+	background-color: #82c9c9;
+	transition-duration: 0.01s;
+}
+
+#buttons{
+	font-size:33px;
+}
+
+#zero{
+	width:180px;
+}
+
+#equals{
+	height:180px;
+	margin-top:-90px;
+}
+
+.C{
+	background-color: #ff6666;
+	border: none;
+	width:180px;
+}
+
+.C:hover {
+	background-color: #ff9999;
+}
+
+.C:active{
+	background-color:#ff3333;
+	transition-duration: 0.01s;
+}
+
+.operator{
+	background-color: #d9d9a6;
+	border: none;
+}
+
+.operator:hover {
+  background-color: #e8e8c9;
+}
+
+.operator:active{
+	background-color: #c9c982;
+	transition-duration: 0.01s;
+}
