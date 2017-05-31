@@ -2,7 +2,6 @@ $(document).ready(function() {
   var stage = [];
   var answer = [];
   var isAnswer = false;
-  var operatorActive = false;
   var decimalFlag = false;
 
   function ResetCalc() {
@@ -11,7 +10,6 @@ $(document).ready(function() {
     $("#stage").html("<p> </p>");
     $("#answer").html("<p> </p>");
     isAnswer = false;
-    operatorActive = true;
     decimalFlag = false;
   }
 
@@ -24,17 +22,17 @@ $(document).ready(function() {
         var splitStage = stage[0].split("");
         splitStage.pop("");
         stage = [splitStage.join("")];
-        //$("#stage").html("<p>" + stage + "</p>");
-        if (operatorActive) operatorActive = false;
         break;
       case '=': // replaces stage with answer, then clears answer
-        stage = [answer];
+        stage = [String(answer)];
         answer = [];
-        //var splitStage = stage[0].split("");
-        //if (splitStage.length > 12){
-          //stage = [parseFloat(splitStage.join("")).toPrecision(8)];
-          //stage = [num];
-        //}
+        var splitStage = stage[0].split("");
+        if (splitStage.length > 15){
+          /*ResetCalc();
+          $("#stage").html("<p>Character limit exceeded </p>");
+          return;*/
+          stage = [parseFloat(stage[0]).toPrecision(8)]; // this is the real solution, but needs more work
+        }
         $("#answer").html("<p> </p>");
         $("#stage").html("<p>" + stage + "</p>");
         operatorActive = false;
@@ -43,44 +41,48 @@ $(document).ready(function() {
         return;
       default: // an evaluable button is pressed
         // if operator active, replace operator
-        if (this.value == "+" || this.value == "-" || this.value == "*" || this.value == "/") {
-          if (operatorActive) {
+        if (this.value == "+" || this.value == "-" || this.value == "*" || this.value == "/") { // depricated
+          if (OperatorActive()) {
             var splitStage = stage[0].split("");
             splitStage.pop();
             stage = [splitStage.join("")];
           }
-          operatorActive = true;
           isAnswer = false;
         } else {
-          operatorActive = false;
           if (isAnswer) {
             stage = [];
             isAnswer = false;
           }
         }
-
-        if (operatorActive) {
-          decimalFlag = false;
-        }
-
-        if (this.value == ".") { // todo: no decimal point allowed after operator
+        // utilises decimalFlag
+        if (this.value == ".") {
           if (decimalFlag) {
             return;
           }
           decimalFlag = true;
         }
+        // pushes value of button on to stage
         stage.push(this.value);
         stage = [stage.join("")];
+        console.log(stage);
     }
 
-
-    if (!operatorActive) {
+    if (!OperatorActive()) {
+      var splitStage = stage[0].split("");
+      if (splitStage[splitStage.length-1] == ".") return;
       answer = eval(stage.join(""));
       if (stage != answer) {
         $("#answer").html("<p>" + answer + "</p>");
       }
     }
 
+    var splitStage = stage[0].split("");
+    if (splitStage.length > 15){
+      ResetCalc();
+      $("#stage").html("<p>Character limit exceeded </p>");
+      return;
+      //stage = [parseFloat(stage[0]).toPrecision(8)]; // this is the real solution, but needs more work
+    }
     $("#stage").html("<p>" + stage + "</p>");
 
     function OperatorActive(){ // This replaces the operator active boolean
@@ -89,6 +91,7 @@ $(document).ready(function() {
         (splitStage[splitStage.length-1] == "-") ||
         (splitStage[splitStage.length-1] == "*") ||
         (splitStage[splitStage.length-1] == "/")){
+        decimalFlag = false;
         return true
       }
       return false;
@@ -98,6 +101,5 @@ $(document).ready(function() {
 
 // Todo: after truncating for precision, last number sometimes gets erased
 // Todo: Make stage contents overflow into a scrolling text area, and only limit precision after evaluation.
-// Todo: Wake ".3" or ".43" etc show up on stage before number is pressed.
 // Todo: add keypad control.
 // Todo: answer only shows when a number following an operator is present
