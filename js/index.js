@@ -20,9 +20,21 @@ $(document).ready(function() {
       case "C": // clears all variables and arrays
         ResetCalc();
         return;
+      case "backspace":
+        var splitStage = stage[0].split("");
+        splitStage.pop("");
+        stage = [splitStage.join("")];
+        //$("#stage").html("<p>" + stage + "</p>");
+        if (operatorActive) operatorActive = false;
+        break;
       case '=': // replaces stage with answer, then clears answer
         stage = [answer];
         answer = [];
+        //var splitStage = stage[0].split("");
+        //if (splitStage.length > 12){
+          //stage = [parseFloat(splitStage.join("")).toPrecision(8)];
+          //stage = [num];
+        //}
         $("#answer").html("<p> </p>");
         $("#stage").html("<p>" + stage + "</p>");
         operatorActive = false;
@@ -57,24 +69,35 @@ $(document).ready(function() {
           }
           decimalFlag = true;
         }
-
-
         stage.push(this.value);
         stage = [stage.join("")];
     }
-		var splitStage = stage[0].split("");
-		if (splitStage.length > 16){
-			var num = parseFloat(splitStage.join("")).toPrecision(8);
-			stage = [num];
-		}
 
 
     if (!operatorActive) {
       answer = eval(stage.join(""));
-      $("#answer").html("<p>" + answer + "</p>");
+      if (stage != answer) {
+        $("#answer").html("<p>" + answer + "</p>");
+      }
     }
 
     $("#stage").html("<p>" + stage + "</p>");
 
+    function OperatorActive(){ // This replaces the operator active boolean
+      var splitStage = stage[0].split("");
+      if ((splitStage[splitStage.length-1] == "+") ||
+        (splitStage[splitStage.length-1] == "-") ||
+        (splitStage[splitStage.length-1] == "*") ||
+        (splitStage[splitStage.length-1] == "/")){
+        return true
+      }
+      return false;
+    }
   });
 });
+
+// Todo: after truncating for precision, last number sometimes gets erased
+// Todo: Make stage contents overflow into a scrolling text area, and only limit precision after evaluation.
+// Todo: Wake ".3" or ".43" etc show up on stage before number is pressed.
+// Todo: add keypad control.
+// Todo: answer only shows when a number following an operator is present
