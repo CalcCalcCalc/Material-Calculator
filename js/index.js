@@ -28,10 +28,7 @@ $(document).ready(function() {
         answer = [];
         var splitStage = stage[0].split("");
         if (splitStage.length > 15){
-          /*ResetCalc();
-          $("#stage").html("<p>Character limit exceeded </p>");
-          return;*/
-          stage = [parseFloat(stage[0]).toPrecision(8)]; // this is the real solution, but needs more work
+          stage = [parseFloat(stage[0]).toPrecision(8)]; // this is the real solution, but needs more work yeah
         }
         $("#answer").html("<p> </p>");
         $("#stage").html("<p>" + stage + "</p>");
